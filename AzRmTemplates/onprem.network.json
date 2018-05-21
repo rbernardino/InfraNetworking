@@ -2,30 +2,41 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "dsclab-vnet-name": {
+    "onprem-vnet-name": {
       "type": "string",
       "minLength": 1
+    },
+    "onprem-vnet-prefix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
     }
   },
   "variables": {
-    "dsclab-vnet-prefix": "172.16.0.0/16",
+    "onprem-vnet-prefix": "[parameters('onprem-vnet-prefix')]",
     "nsg-frontEnd": "nsg-frontEnd"
 
   },
   "resources": [
     {
-      "name": "[parameters('dsclab-vnet-name')]",
+      "name": "[parameters('onprem-vnet-name')]",
       "type": "Microsoft.Network/virtualNetworks",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-03-30",
       "dependsOn": [],
       "tags": {
-        "displayName": "[parameters('dsclab-vnet-name')]"
+        "displayName": "[parameters('onprem-vnet-name')]"
       },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[variables('dsclab-vnet-prefix')]"
+            "[variables('onprem-vnet-prefix')]"
           ]
         },
         "dhcpOptions": {
@@ -35,7 +46,7 @@
         },
         "subnets": [
           {
-            "name": "dc",
+            "name": "onprem-dc",
             "properties": {
               "addressPrefix": "172.16.3.0/24",
               "networkSecurityGroup": {
@@ -44,19 +55,19 @@
             }
           },
           {
-            "name": "web",
+            "name": "onprem-web",
             "properties": {
               "addressPrefix": "172.16.4.0/24"
             }
           },
           {
-            "name": "mgmt",
+            "name": "onprem-mgmt",
             "properties": {
               "addressPrefix": "172.16.5.0/24"
             }
           },
           {
-            "name": "web-lx",
+            "name": "onprem-web-lx",
             "properties": {
               "addressPrefix": "172.16.6.0/24"
             }

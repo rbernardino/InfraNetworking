@@ -1,11 +1,11 @@
 break
 
-#region Deploy the lab environment network resource
+#region Deploy the onprem network resource
   $location = 'Southeast Asia'
-  $resourceGroupName = 'dscLabNetwork'
-  $resourceDeploymentName = 'dscLabNetwork-deployment'
-  $templateFile = '.\AzRmTemplates\dsclab.network.json'
-  $templateParameterFile = '.\AzRmTemplates\dsclab.network.parameters.json'
+  $resourceGroupName = 'onPremNetwork'
+  $resourceDeploymentName = 'onPremNetwork-deployment'
+  $templateFile = '.\AzRmTemplates\onprem.network.json'
+  $templateParameterFile = '.\AzRmTemplates\onprem.network.parameters.json'
 
   New-AzureRmJsonTemplateDeployment `
     -ResourceGroupName $resourceGroupName `

@@ -4,11 +4,17 @@
   "parameters": {
     "onprem-vnet-name": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "metadata": {
+        "description": "The name of this virtual network."
+      }
     },
     "onprem-vnet-prefix": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "metadata": {
+        "description": "The IP address range of the virtual network."
+      }
     },
     "location": {
       "type": "string",

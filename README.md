@@ -6,6 +6,8 @@ A proof of concept (POC) for implementing a hybrid IT environment using Microsof
 
 [Management Tier](https://github.com/rbernardino/InfraClient)
 
+[WebSphere Application Server Tier](https://github.com/rbernardino/InfraWebSphere)
+
 Web Tier (TODO)
 
 

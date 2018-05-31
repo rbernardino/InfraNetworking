@@ -69,7 +69,10 @@
           {
             "name": "onprem-mgmt",
             "properties": {
-              "addressPrefix": "172.16.5.0/24"
+              "addressPrefix": "172.16.5.0/24",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-frontEnd'))]"
+              }
             }
           },
           {

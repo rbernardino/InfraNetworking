@@ -127,6 +127,23 @@
               "sourceAddressPrefixes": [],
               "destinationAddressPrefixes": []
             }
+          },
+          {
+            "name": "WinRm-Allow-Http",
+            "properties": {
+              "priority": "120",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5985",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourcePortRanges": [],
+              "destinationPortRanges": [],
+              "sourceAddressPrefixes": [],
+              "destinationAddressPrefixes": []
+            }
           }
         ]
       }

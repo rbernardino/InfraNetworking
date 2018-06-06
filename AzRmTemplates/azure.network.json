@@ -1,0 +1,122 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azure-vnet-name": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The name of this virtual network."
+      }
+    },
+    "azure-vnet-prefix": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The IP address range of the virtual network."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+  },
+  "variables": {
+    "azure-vnet-prefix": "[parameters('azure-vnet-prefix')]",
+    "nsg-frontent-lx": "nsg-frontent-lx"
+
+  },
+  "resources": [
+    {
+      "name": "[parameters('azure-vnet-name')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[parameters('location')]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "[parameters('azure-vnet-name')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('azure-vnet-prefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "azure-portal",
+            "properties": {
+              "addressPrefix": "192.168.112.32/27",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-frontent-lx'))]"
+              }
+            }
+          },
+          {
+            "name": "azure-portaldb",
+            "properties": {
+              "addressPrefix": "192.168.112.64/27",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-frontent-lx'))]"
+              }
+            }
+          },
+          {
+            "name": "azure-portalldap",
+            "properties": {
+              "addressPrefix": "192.168.112.96/27",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-frontent-lx'))]"
+              }
+            }
+          },
+          {
+            "name": "azure-web-lx",
+            "properties": {
+              "addressPrefix": "192.168.112.128/27",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-frontent-lx'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('nsg-frontent-lx')]",
+      "apiVersion": "2018-01-01",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "[variables('nsg-frontent-lx')]"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH-Allow",
+            "properties": {
+              "priority": "100",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourcePortRanges": [],
+              "destinationPortRanges": [],
+              "sourceAddressPrefixes": [],
+              "destinationAddressPrefixes": []
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+
+  }
+}
